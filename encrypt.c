@@ -3,6 +3,8 @@
 #include <stdlib.h>
 
 #define ALPHABET_SIZE (26)
+#define ALPHABET_MIN (97)
+#define ALPHABET_MAX (122)
 
 char *encrypt(const char *plain_text)
 {
@@ -11,9 +13,9 @@ char *encrypt(const char *plain_text)
   for (int i = 0; i < strlen(plain_text); i++)
   {
     int ascii = plain_text[i];
-    if (97 <= ascii && ascii <= 122)
+    if (ALPHABET_MIN <= ascii && ascii <= ALPHABET_MAX)
     {
-      if (ascii + shift > 122)
+      if (ascii + shift > ALPHABET_MAX)
       {
         cipher_text[i] = ascii + shift - ALPHABET_SIZE;
       }
