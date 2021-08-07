@@ -13,7 +13,14 @@ char *encrypt(const char *plain_text)
     int ascii = plain_text[i];
     if (97 <= ascii && ascii <= 122)
     {
-      cipher_text[i] = plain_text[i] + shift;
+      if (ascii + shift > 122)
+      {
+        cipher_text[i] = ascii + shift - ALPHABET_SIZE;
+      }
+      else
+      {
+        cipher_text[i] = plain_text[i] + shift;
+      }
     }
     else
     {
