@@ -6,9 +6,8 @@
 #define ALPHABET_MIN (97)
 #define ALPHABET_MAX (122)
 
-char *encrypt(const char *plain_text)
+char *encrypt(const char *plain_text, const int shift)
 {
-  int shift = 1;
   char *cipher_text = malloc(sizeof(plain_text));
   for (int i = 0; i < strlen(plain_text); i++)
   {
@@ -35,7 +34,8 @@ char *encrypt(const char *plain_text)
 int main(int argc, char const *argv[])
 {
   const char *plain_text = argv[1];
-  char *cipher_text = encrypt(plain_text);
+  const int shift = atoi(argv[2]);
+  char *cipher_text = encrypt(plain_text, shift);
   printf("Encrypted text: %s\n", cipher_text);
   free(cipher_text);
   return 0;
