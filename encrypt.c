@@ -5,6 +5,9 @@
 #define ALPHABET_SIZE (26)
 #define ALPHABET_MIN (97)
 #define ALPHABET_MAX (122)
+#define PLAIN_TEXT_FILE (1)
+#define CIPHER_TEXT_FILE (2)
+#define SHIFT (3)
 
 char encrypt_letter(char character, const int shift)
 {
@@ -30,9 +33,9 @@ char encrypt_letter(char character, const int shift)
 
 int main(int argc, char const *argv[])
 {
-  FILE *fp_plain = fopen(argv[1], "r");
-  FILE *fp_cipher = fopen(argv[2], "w");
-  int shift = atoi(argv[3]);
+  FILE *fp_plain = fopen(argv[PLAIN_TEXT_FILE], "r");
+  FILE *fp_cipher = fopen(argv[CIPHER_TEXT_FILE], "w");
+  int shift = atoi(argv[SHIFT]);
 
   char letter;
   char cipher_letter;
