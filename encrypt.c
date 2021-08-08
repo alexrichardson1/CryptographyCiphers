@@ -11,7 +11,7 @@
 
 char encrypt_letter(char character, const int shift)
 {
-  char encrypted_character;
+  char encrypted_character = character;
   int ascii = character;
   if (ALPHABET_MIN <= ascii && ascii <= ALPHABET_MAX)
   {
@@ -23,10 +23,6 @@ char encrypt_letter(char character, const int shift)
     {
       encrypted_character = ascii + shift;
     }
-  }
-  else
-  {
-    encrypted_character = character;
   }
   return encrypted_character;
 }
