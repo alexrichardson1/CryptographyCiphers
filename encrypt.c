@@ -1,50 +1,49 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <time.h>
 
 #define ALPHABET_SIZE (26)
 #define ALPHABET_MIN (97)
 #define ALPHABET_MAX (122)
 
-void encrypt(char *text, const int shift)
+char encrypt_letter(char character, const int shift)
 {
-  for (int i = 0; i < strlen(text); i++)
+  char encrypted_character;
+  int ascii = character;
+  if (ALPHABET_MIN <= ascii && ascii <= ALPHABET_MAX)
   {
-    int ascii = text[i];
-    if (ALPHABET_MIN <= ascii && ascii <= ALPHABET_MAX)
+    if (ascii + shift > ALPHABET_MAX)
     {
-      if (ascii + shift > ALPHABET_MAX)
-      {
-        text[i] = ascii + shift - ALPHABET_SIZE;
-      }
-      else
-      {
-        text[i] = text[i] + shift;
-      }
+      encrypted_character = ascii + shift - ALPHABET_SIZE;
     }
     else
     {
-      text[i] = text[i];
+      encrypted_character = ascii + shift;
     }
   }
+  else
+  {
+    encrypted_character = character;
+  }
+  return encrypted_character;
 }
 
 int main(int argc, char const *argv[])
 {
-  FILE *fp = fopen(argv[1], "r");
-  int shift = atoi(argv[2]);
+  FILE *fp_plain = fopen(argv[1], "r");
+  FILE *fp_cipher = fopen(argv[2], "w");
+  int shift = atoi(argv[3]);
 
-  fseek(fp, 0, SEEK_END);
-  long size = ftell(fp);
-  rewind(fp);
-  char *fcontent = malloc(size);
-  fread(fcontent, 1, size, fp);
-  fclose(fp);
-  fp = fopen(argv[3], "w");
-  encrypt(fcontent, shift);
-  fwrite(fcontent, 1, size, fp);
-  fclose(fp);
-  free(fcontent);
+  char letter;
+  char cipher_letter;
+
+  while ((letter = fgetc(fp_plain)) != EOF)
+  {
+    cipher_letter = encrypt_letter(letter, shift);
+    fputc(cipher_letter, fp_cipher);
+  }
+
+  fclose(fp_plain);
+  fclose(fp_cipher);
   return 0;
 }
