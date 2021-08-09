@@ -40,11 +40,30 @@ void ceasar_cipher(FILE *fp_plain, FILE *fp_cipher, const int shift)
   fclose(fp_cipher);
 }
 
+void vigenere(FILE *fp_plain, FILE *fp_cipher, const char *key)
+{
+
+  char letter;
+  char cipher_letter;
+  int shift = key[0];
+  int counter = 0;
+  int length = strlen(key);
+
+  while ((letter = fgetc(fp_plain)) != EOF)
+  {
+    shift = key[counter++ % length] - ALPHABET_MIN + 1;
+    cipher_letter = shift_letter(letter, shift);
+    fputc(cipher_letter, fp_cipher);
+  }
+}
+
 int main(int argc, char const *argv[])
 {
   FILE *fp_plain = fopen(argv[PLAIN_TEXT_FILE], "r");
   FILE *fp_cipher = fopen(argv[CIPHER_TEXT_FILE], "w");
   int shift = atoi(argv[SHIFT]);
   ceasar_cipher(fp_plain, fp_cipher, shift);
+  const char *key = "monika";
+  vigenere(fp_plain, fp_cipher, key);
   return 0;
 }
