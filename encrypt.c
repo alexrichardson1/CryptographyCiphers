@@ -27,22 +27,24 @@ char encrypt_letter(char character, const int shift)
   return encrypted_character;
 }
 
-int main(int argc, char const *argv[])
+void ceasar_cipher(FILE *fp_plain, FILE *fp_cipher, const int shift)
 {
-  FILE *fp_plain = fopen(argv[PLAIN_TEXT_FILE], "r");
-  FILE *fp_cipher = fopen(argv[CIPHER_TEXT_FILE], "w");
-  int shift = atoi(argv[SHIFT]);
-
   char letter;
   char cipher_letter;
-
   while ((letter = fgetc(fp_plain)) != EOF)
   {
     cipher_letter = encrypt_letter(letter, shift);
     fputc(cipher_letter, fp_cipher);
   }
-
   fclose(fp_plain);
   fclose(fp_cipher);
+}
+
+int main(int argc, char const *argv[])
+{
+  FILE *fp_plain = fopen(argv[PLAIN_TEXT_FILE], "r");
+  FILE *fp_cipher = fopen(argv[CIPHER_TEXT_FILE], "w");
+  int shift = atoi(argv[SHIFT]);
+  ceasar_cipher(fp_plain, fp_cipher, shift);
   return 0;
 }
