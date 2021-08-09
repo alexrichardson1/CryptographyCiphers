@@ -9,7 +9,7 @@
 #define CIPHER_TEXT_FILE (2)
 #define SHIFT (3)
 
-char encrypt_letter(char character, const int shift)
+char shift_letter(char character, const int shift)
 {
   char encrypted_character = character;
   int ascii = character;
@@ -33,7 +33,7 @@ void ceasar_cipher(FILE *fp_plain, FILE *fp_cipher, const int shift)
   char cipher_letter;
   while ((letter = fgetc(fp_plain)) != EOF)
   {
-    cipher_letter = encrypt_letter(letter, shift);
+    cipher_letter = shift_letter(letter, shift);
     fputc(cipher_letter, fp_cipher);
   }
   fclose(fp_plain);
