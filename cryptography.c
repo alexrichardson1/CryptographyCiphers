@@ -108,7 +108,7 @@ void cryptography_menu(int choice)
   func(fp_input, fp_output, encrypt == 'e');
 }
 
-int main(int argc, char const *argv[])
+void menu(void)
 {
   int choice;
   do
@@ -130,6 +130,10 @@ int main(int argc, char const *argv[])
       printf("Invalid number. Enter again\n");
     }
   } while (choice != EXIT_CHOCIE);
+}
 
+int main(int argc, char const *argv[])
+{
+  menu();
   return EXIT_SUCCESS;
 }
