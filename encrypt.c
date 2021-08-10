@@ -67,47 +67,44 @@ void vigenere(FILE *fp_plain, FILE *fp_cipher, const char *key)
   fclose(fp_cipher);
 }
 
+FILE *get_file(const char *file_mode)
+{
+  char file_name[20];
+  scanf(" %s", file_name);
+  FILE *fp = fopen(file_name, file_mode);
+  check_ptr(fp);
+  return fp;
+}
+
 void ceasar_menu()
 {
-  char plain_file[20];
-  char cipher_file[20];
   int shift;
 
   printf("Enter plain text file name: ");
-  scanf(" %s", plain_file);
+  FILE *fp_plain = get_file("r");
 
   printf("Enter new file name: ");
-  scanf(" %s", cipher_file);
+  FILE *fp_cipher = get_file("w");
 
   printf("Enter shift key: ");
   scanf(" %d", &shift);
 
-  FILE *fp_plain = fopen(plain_file, "r");
-  check_ptr(fp_plain);
-  FILE *fp_cipher = fopen(cipher_file, "w");
-  check_ptr(fp_cipher);
   ceasar_cipher(fp_plain, fp_cipher, shift);
 }
 
 void vigenere_menu()
 {
-  char plain_file[20];
-  char cipher_file[20];
   char key[20];
 
   printf("Enter plain text file name: ");
-  scanf(" %s", plain_file);
+  FILE *fp_plain = get_file("r");
 
   printf("Enter new file name: ");
-  scanf(" %s", cipher_file);
+  FILE *fp_cipher = get_file("w");
 
   printf("Enter shift key: ");
   scanf(" %s", key);
 
-  FILE *fp_plain = fopen(plain_file, "r");
-  check_ptr(fp_plain);
-  FILE *fp_cipher = fopen(cipher_file, "w");
-  check_ptr(fp_cipher);
   vigenere(fp_plain, fp_cipher, key);
 }
 
