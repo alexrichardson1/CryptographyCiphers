@@ -9,6 +9,15 @@
 #define CIPHER_TEXT_FILE (2)
 #define SHIFT (3)
 
+void check_ptr(const void *ptr)
+{
+  if (!ptr)
+  {
+    fprintf(stderr, "Error: NULL pointer\n");
+    exit(EXIT_FAILURE);
+  }
+}
+
 char shift_letter(char character, const int shift)
 {
   char encrypted_character = character;
@@ -74,7 +83,9 @@ void ceasar_menu()
   scanf(" %d", &shift);
 
   FILE *fp_plain = fopen(plain_file, "r");
+  check_ptr(fp_plain);
   FILE *fp_cipher = fopen(cipher_file, "w");
+  check_ptr(fp_cipher);
   ceasar_cipher(fp_plain, fp_cipher, shift);
 }
 
@@ -94,7 +105,9 @@ void vigenere_menu()
   scanf(" %s", key);
 
   FILE *fp_plain = fopen(plain_file, "r");
+  check_ptr(fp_plain);
   FILE *fp_cipher = fopen(cipher_file, "w");
+  check_ptr(fp_cipher);
   vigenere(fp_plain, fp_cipher, key);
 }
 
