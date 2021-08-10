@@ -25,7 +25,7 @@ char shift_letter(char character, int shift, bool encrypt)
   int ascii = character;
   int alphabet_number;
   bool isLower = islower(character);
-  shift = encrypt ? shift : (-1 * shift);
+  shift = encrypt ? shift : (ALPHABET_SIZE - shift);
   int alphabet_min = isLower ? ALPHABET_LOWER_MIN : ALPHABET_UPPER_MIN;
   int alphabet_max = isLower ? ALPHABET_LOWER_MAX : ALPHABET_UPPER_MAX;
   if (alphabet_min <= ascii && ascii <= alphabet_max)
