@@ -19,12 +19,13 @@ void check_ptr(const void *ptr)
   }
 }
 
-char shift_letter(char character, const int shift)
+char shift_letter(char character, int shift, bool encrypt)
 {
   char encrypted_character = character;
   int ascii = character;
   int alphabet_number;
   bool isLower = islower(character);
+  shift = encrypt ? shift : (-1 * shift);
   int alphabet_min = isLower ? ALPHABET_LOWER_MIN : ALPHABET_UPPER_MIN;
   int alphabet_max = isLower ? ALPHABET_LOWER_MAX : ALPHABET_UPPER_MAX;
   if (alphabet_min <= ascii && ascii <= alphabet_max)
@@ -35,20 +36,20 @@ char shift_letter(char character, const int shift)
   return encrypted_character;
 }
 
-void ceasar_cipher(FILE *fp_plain, FILE *fp_cipher, const int shift)
+void ceasar_cipher(FILE *fp_plain, FILE *fp_cipher, const int shift, bool encrypt)
 {
   char letter;
   char cipher_letter;
   while ((letter = fgetc(fp_plain)) != EOF)
   {
-    cipher_letter = shift_letter(letter, shift);
+    cipher_letter = shift_letter(letter, shift, encrypt);
     fputc(cipher_letter, fp_cipher);
   }
   fclose(fp_plain);
   fclose(fp_cipher);
 }
 
-void vigenere_cipher(FILE *fp_plain, FILE *fp_cipher, const char *key)
+void vigenere_cipher(FILE *fp_plain, FILE *fp_cipher, const char *key, bool encrypt)
 {
   char letter;
   char cipher_letter;
@@ -59,7 +60,7 @@ void vigenere_cipher(FILE *fp_plain, FILE *fp_cipher, const char *key)
   while ((letter = fgetc(fp_plain)) != EOF)
   {
     shift = tolower(key[counter++ % length]) - ALPHABET_LOWER_MIN + 1;
-    cipher_letter = shift_letter(letter, shift);
+    cipher_letter = shift_letter(letter, shift, encrypt);
     fputc(cipher_letter, fp_cipher);
   }
   fclose(fp_plain);
@@ -75,30 +76,33 @@ FILE *get_file(const char *file_mode)
   return fp;
 }
 
-void ceasar(FILE *fp_plain, FILE *fp_cipher)
+void ceasar(FILE *fp_plain, FILE *fp_cipher, bool encrypt)
 {
   int shift;
   printf("Enter shift key: ");
   scanf(" %d", &shift);
-  ceasar_cipher(fp_plain, fp_cipher, shift);
+  ceasar_cipher(fp_plain, fp_cipher, shift, encrypt);
 }
 
-void vigenere(FILE *fp_plain, FILE *fp_cipher)
+void vigenere(FILE *fp_plain, FILE *fp_cipher, bool encrypt)
 {
   char key[20];
   printf("Enter shift key: ");
   scanf(" %s", key);
-  vigenere_cipher(fp_plain, fp_cipher, key);
+  vigenere_cipher(fp_plain, fp_cipher, key, encrypt);
 }
 
 void cryptography_menu(int choice)
 {
-  printf("Enter plain text file name: ");
+  char encrypt;
+  printf("Encrypt or decrypt [e/d]: ");
+  scanf(" %c", &encrypt);
+  printf("Enter input file name: ");
   FILE *fp_plain = get_file("r");
-  printf("Enter new file name: ");
+  printf("Enter ouput file name: ");
   FILE *fp_cipher = get_file("w");
-  void (*func)(FILE *, FILE *) = (choice == 1) ? ceasar : vigenere;
-  func(fp_plain, fp_cipher);
+  void (*func)(FILE *, FILE *, bool) = (choice == 1) ? ceasar : vigenere;
+  func(fp_plain, fp_cipher, encrypt == 'e');
 }
 
 int main(int argc, char const *argv[])
