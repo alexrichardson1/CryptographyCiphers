@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <stdbool.h>
 
 #define ALPHABET_SIZE (26)
-#define ALPHABET_MIN (97)
-#define ALPHABET_MAX (122)
+#define ALPHABET_LOWER_MIN (97)
+#define ALPHABET_LOWER_MAX (122)
+#define ALPHABET_UPPER_MIN (65)
+#define ALPHABET_UPPER_MAX (90)
 #define PLAIN_TEXT_FILE (1)
 #define CIPHER_TEXT_FILE (2)
 #define SHIFT (3)
@@ -23,10 +27,13 @@ char shift_letter(char character, const int shift)
   char encrypted_character = character;
   int ascii = character;
   int alphabet_number;
-  if (ALPHABET_MIN <= ascii && ascii <= ALPHABET_MAX)
+  bool isLower = islower(character);
+  int alphabet_min = isLower ? ALPHABET_LOWER_MIN : ALPHABET_UPPER_MIN;
+  int alphabet_max = isLower ? ALPHABET_UPPER_MIN : ALPHABET_UPPER_MAX;
+  if (alphabet_min <= ascii && ascii <= alphabet_max)
   {
-    alphabet_number = (ascii - ALPHABET_MIN + shift) % ALPHABET_SIZE;
-    encrypted_character = alphabet_number + ALPHABET_MIN;
+    alphabet_number = (ascii - alphabet_min + shift) % ALPHABET_SIZE;
+    encrypted_character = alphabet_number + alphabet_min;
   }
   return encrypted_character;
 }
@@ -54,7 +61,7 @@ void vigenere(FILE *fp_plain, FILE *fp_cipher, const char *key)
 
   while ((letter = fgetc(fp_plain)) != EOF)
   {
-    shift = key[counter++ % length] - ALPHABET_MIN + 1;
+    shift = tolower(key[counter++ % length]) - ALPHABET_LOWER_MIN + 1;
     cipher_letter = shift_letter(letter, shift);
     fputc(cipher_letter, fp_cipher);
   }
