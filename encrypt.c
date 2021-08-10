@@ -22,16 +22,11 @@ char shift_letter(char character, const int shift)
 {
   char encrypted_character = character;
   int ascii = character;
+  int alphabet_number;
   if (ALPHABET_MIN <= ascii && ascii <= ALPHABET_MAX)
   {
-    if (ascii + shift > ALPHABET_MAX)
-    {
-      encrypted_character = ascii + shift - ALPHABET_SIZE;
-    }
-    else
-    {
-      encrypted_character = ascii + shift;
-    }
+    alphabet_number = (ascii - ALPHABET_MIN + shift) % ALPHABET_SIZE;
+    encrypted_character = alphabet_number + ALPHABET_MIN;
   }
   return encrypted_character;
 }
