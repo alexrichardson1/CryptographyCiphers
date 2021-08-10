@@ -9,9 +9,6 @@
 #define ALPHABET_LOWER_MAX (122)
 #define ALPHABET_UPPER_MIN (65)
 #define ALPHABET_UPPER_MAX (90)
-#define PLAIN_TEXT_FILE (1)
-#define CIPHER_TEXT_FILE (2)
-#define SHIFT (3)
 
 void check_ptr(const void *ptr)
 {
