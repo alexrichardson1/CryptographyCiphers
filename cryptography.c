@@ -9,6 +9,9 @@
 #define ALPHABET_LOWER_MAX (122)
 #define ALPHABET_UPPER_MIN (65)
 #define ALPHABET_UPPER_MAX (90)
+#define CEASAR_CHOCIE (1)
+#define VIGENERE_CHOCIE (2)
+#define EXIT_CHOCIE (3)
 
 void check_ptr(const void *ptr)
 {
@@ -110,23 +113,23 @@ int main(int argc, char const *argv[])
   int choice;
   do
   {
-    printf("1. Ceasar\n");
-    printf("2. Vigenere\n");
-    printf("3. Exit\n");
+    printf("%d. Ceasar\n", CEASAR_CHOCIE);
+    printf("%d. Vigenere\n", VIGENERE_CHOCIE);
+    printf("%d. Exit\n", EXIT_CHOCIE);
     printf("Enter a number: ");
     scanf("%d", &choice);
     switch (choice)
     {
-    case 1:
-    case 2:
+    case CEASAR_CHOCIE:
+    case VIGENERE_CHOCIE:
       cryptography_menu(choice);
       break;
-    case 3:
+    case EXIT_CHOCIE:
       break;
     default:
       printf("Invalid number. Enter again\n");
     }
-  } while (choice != 3);
+  } while (choice != EXIT_CHOCIE);
 
-  return 0;
+  return EXIT_SUCCESS;
 }
