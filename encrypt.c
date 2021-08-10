@@ -26,7 +26,7 @@ char shift_letter(char character, const int shift)
   int alphabet_number;
   bool isLower = islower(character);
   int alphabet_min = isLower ? ALPHABET_LOWER_MIN : ALPHABET_UPPER_MIN;
-  int alphabet_max = isLower ? ALPHABET_UPPER_MIN : ALPHABET_UPPER_MAX;
+  int alphabet_max = isLower ? ALPHABET_LOWER_MAX : ALPHABET_UPPER_MAX;
   if (alphabet_min <= ascii && ascii <= alphabet_max)
   {
     alphabet_number = (ascii - alphabet_min + shift) % ALPHABET_SIZE;
