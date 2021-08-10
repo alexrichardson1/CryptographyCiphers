@@ -51,7 +51,7 @@ void ceasar_cipher(FILE *fp_plain, FILE *fp_cipher, const int shift)
   fclose(fp_cipher);
 }
 
-void vigenere(FILE *fp_plain, FILE *fp_cipher, const char *key)
+void vigenere_cipher(FILE *fp_plain, FILE *fp_cipher, const char *key)
 {
   char letter;
   char cipher_letter;
@@ -78,36 +78,30 @@ FILE *get_file(const char *file_mode)
   return fp;
 }
 
-void ceasar_menu()
+void ceasar(FILE *fp_plain, FILE *fp_cipher)
 {
   int shift;
-
-  printf("Enter plain text file name: ");
-  FILE *fp_plain = get_file("r");
-
-  printf("Enter new file name: ");
-  FILE *fp_cipher = get_file("w");
-
   printf("Enter shift key: ");
   scanf(" %d", &shift);
-
   ceasar_cipher(fp_plain, fp_cipher, shift);
 }
 
-void vigenere_menu()
+void vigenere(FILE *fp_plain, FILE *fp_cipher)
 {
   char key[20];
-
-  printf("Enter plain text file name: ");
-  FILE *fp_plain = get_file("r");
-
-  printf("Enter new file name: ");
-  FILE *fp_cipher = get_file("w");
-
   printf("Enter shift key: ");
   scanf(" %s", key);
+  vigenere_cipher(fp_plain, fp_cipher, key);
+}
 
-  vigenere(fp_plain, fp_cipher, key);
+void cryptography_menu(int choice)
+{
+  printf("Enter plain text file name: ");
+  FILE *fp_plain = get_file("r");
+  printf("Enter new file name: ");
+  FILE *fp_cipher = get_file("w");
+  void (*func)(FILE *, FILE *) = (choice == 1) ? ceasar : vigenere;
+  func(fp_plain, fp_cipher);
 }
 
 int main(int argc, char const *argv[])
@@ -123,10 +117,8 @@ int main(int argc, char const *argv[])
     switch (choice)
     {
     case 1:
-      ceasar_menu();
-      break;
     case 2:
-      vigenere_menu();
+      cryptography_menu(choice);
       break;
     case 3:
       break;
