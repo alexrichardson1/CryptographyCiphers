@@ -1,10 +1,10 @@
 CC=gcc
 CFLAGS=-g -Wall -Werror
 
-encrypt: encrypt.c
-		$(CC) $(CFLAGS) encrypt.c -o encrypt
+encrypt: cryptography.c
+		$(CC) $(CFLAGS) cryptography.c -o cryptography
 
 .PHONY: clean
 
 clean:
-		rm encrypt
+		rm cryptography
