@@ -54,6 +54,8 @@ void vigenere(FILE *fp_plain, FILE *fp_cipher, const char *key)
     cipher_letter = shift_letter(letter, shift);
     fputc(cipher_letter, fp_cipher);
   }
+  fclose(fp_plain);
+  fclose(fp_cipher);
 }
 
 void ceasar_menu()
