@@ -122,7 +122,7 @@ void cryptography_menu(int choice)
   FILE *fp_input = get_file("r");
   printf("Enter ouput file name: ");
   FILE *fp_output = get_file("w");
-  void (*func)(FILE *, FILE *, bool) = (choice == 1) ? ceasar : vigenere;
+  void (*func)(FILE *, FILE *, bool) = (choice == CEASAR_CHOCIE) ? ceasar : vigenere;
   func(fp_input, fp_output, encrypt == 'e');
   fclose(fp_input);
   fclose(fp_output);
