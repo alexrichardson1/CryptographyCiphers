@@ -77,6 +77,18 @@ FILE *get_file(const char *file_mode)
   return fp;
 }
 
+FILE *get_input_file(void)
+{
+  printf("Enter input file name: ");
+  return get_file("r");
+}
+
+FILE *get_output_file(void)
+{
+  printf("Enter ouput file name: ");
+  return get_file("w");
+}
+
 void ceasar(FILE *fp_input, FILE *fp_output, bool encrypt)
 {
   int shift;
@@ -95,10 +107,8 @@ void vigenere(FILE *fp_input, FILE *fp_output, bool encrypt)
 
 void brute_force(void)
 {
-  printf("Enter input file name: ");
-  FILE *fp_input = get_file("r");
-  printf("Enter ouput file name: ");
-  FILE *fp_output = get_file("w");
+  FILE *fp_input = get_input_file();
+  FILE *fp_output = get_output_file();
   char shift[12];
 
   for (int i = 1; i < ALPHABET_SIZE; i++)
@@ -118,10 +128,8 @@ void cryptography_menu(int choice)
   char encrypt;
   printf("Encrypt or decrypt [e/d]: ");
   scanf(" %c", &encrypt);
-  printf("Enter input file name: ");
-  FILE *fp_input = get_file("r");
-  printf("Enter ouput file name: ");
-  FILE *fp_output = get_file("w");
+  FILE *fp_input = get_input_file();
+  FILE *fp_output = get_output_file();
   void (*func)(FILE *, FILE *, bool) = (choice == CEASAR_CHOCIE) ? ceasar : vigenere;
   func(fp_input, fp_output, encrypt == 'e');
   fclose(fp_input);
