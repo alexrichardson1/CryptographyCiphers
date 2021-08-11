@@ -11,7 +11,8 @@
 #define ALPHABET_UPPER_MAX (90)
 #define CEASAR_CHOCIE (1)
 #define VIGENERE_CHOCIE (2)
-#define EXIT_CHOCIE (3)
+#define BRUTE_FORCE_CHOICE (3)
+#define EXIT_CHOCIE (4)
 
 void check_ptr(const void *ptr)
 {
@@ -48,8 +49,7 @@ void ceasar_cipher(FILE *fp_input, FILE *fp_output, const int shift, bool encryp
     cipher_letter = shift_letter(letter, shift, encrypt);
     fputc(cipher_letter, fp_output);
   }
-  fclose(fp_input);
-  fclose(fp_output);
+  rewind(fp_input);
 }
 
 void vigenere_cipher(FILE *fp_input, FILE *fp_output, const char *key, bool encrypt)
@@ -66,8 +66,6 @@ void vigenere_cipher(FILE *fp_input, FILE *fp_output, const char *key, bool encr
     cipher_letter = shift_letter(letter, shift, encrypt);
     fputc(cipher_letter, fp_output);
   }
-  fclose(fp_input);
-  fclose(fp_output);
 }
 
 FILE *get_file(const char *file_mode)
@@ -95,6 +93,26 @@ void vigenere(FILE *fp_input, FILE *fp_output, bool encrypt)
   vigenere_cipher(fp_input, fp_output, key, encrypt);
 }
 
+void brute_force(void)
+{
+  printf("Enter input file name: ");
+  FILE *fp_input = get_file("r");
+  printf("Enter ouput file name: ");
+  FILE *fp_output = get_file("w");
+  char shift[12];
+
+  for (int i = 1; i < ALPHABET_SIZE; i++)
+  {
+    fputs("\n\nShift key: ", fp_output);
+    sprintf(shift, "%d", i);
+    fputs(shift, fp_output);
+    fputs("\n\n", fp_output);
+    ceasar_cipher(fp_input, fp_output, i, false);
+  }
+  fclose(fp_input);
+  fclose(fp_output);
+}
+
 void cryptography_menu(int choice)
 {
   char encrypt;
@@ -106,6 +124,8 @@ void cryptography_menu(int choice)
   FILE *fp_output = get_file("w");
   void (*func)(FILE *, FILE *, bool) = (choice == 1) ? ceasar : vigenere;
   func(fp_input, fp_output, encrypt == 'e');
+  fclose(fp_input);
+  fclose(fp_output);
 }
 
 void menu(void)
@@ -115,6 +135,7 @@ void menu(void)
   {
     printf("%d. Ceasar\n", CEASAR_CHOCIE);
     printf("%d. Vigenere\n", VIGENERE_CHOCIE);
+    printf("%d. Brute force\n", BRUTE_FORCE_CHOICE);
     printf("%d. Exit\n", EXIT_CHOCIE);
     printf("Enter a number: ");
     scanf("%d", &choice);
@@ -123,6 +144,9 @@ void menu(void)
     case CEASAR_CHOCIE:
     case VIGENERE_CHOCIE:
       cryptography_menu(choice);
+      break;
+    case BRUTE_FORCE_CHOICE:
+      brute_force();
       break;
     case EXIT_CHOCIE:
       break;
