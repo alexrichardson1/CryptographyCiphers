@@ -9,17 +9,23 @@
 #define BRUTE_FORCE_CHOICE (3)
 #define EXIT_CHOCIE (4)
 
+bool get_encrypt(void)
+{
+  char encrypt_letter;
+  printf("Encrypt or decrypt [e/d]: ");
+  scanf(" %c", &encrypt_letter);
+  return encrypt_letter == 'e';
+}
+
 void ceasar_menu(void)
 {
   FILE *fp_input = get_input_file();
   FILE *fp_output = get_output_file();
-  char encrypt_letter;
-  printf("Encrypt or decrypt [e/d]: ");
-  scanf(" %c", &encrypt_letter);
+  bool encrypt = get_encrypt();
   int shift;
   printf("Enter shift key: ");
   scanf(" %d", &shift);
-  ceasar_cipher(fp_input, fp_output, shift, encrypt_letter == 'e');
+  ceasar_cipher(fp_input, fp_output, shift, encrypt);
   fclose(fp_input);
   fclose(fp_output);
 }
@@ -28,13 +34,11 @@ void vigenere_menu(void)
 {
   FILE *fp_input = get_input_file();
   FILE *fp_output = get_output_file();
-  char encrypt_letter;
-  printf("Encrypt or decrypt [e/d]: ");
-  scanf(" %c", &encrypt_letter);
+  bool encrypt = get_encrypt();
   char key[20];
   printf("Enter shift key: ");
   scanf(" %s", key);
-  vigenere_cipher(fp_input, fp_output, key, encrypt_letter == 'e');
+  vigenere_cipher(fp_input, fp_output, key, encrypt);
   fclose(fp_input);
   fclose(fp_output);
 }
