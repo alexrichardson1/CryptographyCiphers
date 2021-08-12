@@ -56,22 +56,6 @@ void vigenere_cipher(FILE *fp_input, FILE *fp_output, const char *key, bool encr
   }
 }
 
-void ceasar(FILE *fp_input, FILE *fp_output, bool encrypt)
-{
-  int shift;
-  printf("Enter shift key: ");
-  scanf(" %d", &shift);
-  ceasar_cipher(fp_input, fp_output, shift, encrypt);
-}
-
-void vigenere(FILE *fp_input, FILE *fp_output, bool encrypt)
-{
-  char key[20];
-  printf("Enter shift key: ");
-  scanf(" %s", key);
-  vigenere_cipher(fp_input, fp_output, key, encrypt);
-}
-
 void brute_force(FILE *fp_input, FILE *fp_output)
 {
   char shift[12];
