@@ -9,7 +9,7 @@
 #define BRUTE_FORCE_CHOICE (3)
 #define EXIT_CHOCIE (4)
 
-bool get_encrypt(void)
+static bool get_encrypt(void)
 {
   char encrypt_letter;
   printf("Encrypt or decrypt [e/d]: ");
@@ -17,7 +17,7 @@ bool get_encrypt(void)
   return encrypt_letter == 'e';
 }
 
-void ceasar_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
+static void ceasar_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
 {
   int shift;
   printf("Enter shift key: ");
@@ -25,7 +25,7 @@ void ceasar_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
   ceasar_cipher(fp_input, fp_output, shift, encrypt);
 }
 
-void vigenere_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
+static void vigenere_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
 {
   char key[20];
   printf("Enter shift key: ");
@@ -33,7 +33,7 @@ void vigenere_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
   vigenere_cipher(fp_input, fp_output, key, encrypt);
 }
 
-void menu(void)
+static void menu(void)
 {
   int choice;
   FILE *fp_input;
