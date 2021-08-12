@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include "file.h"
 
 #define ALPHABET_SIZE (26)
 #define ALPHABET_LOWER_MIN (97)
@@ -13,15 +14,6 @@
 #define VIGENERE_CHOCIE (2)
 #define BRUTE_FORCE_CHOICE (3)
 #define EXIT_CHOCIE (4)
-
-void check_ptr(const void *ptr)
-{
-  if (!ptr)
-  {
-    fprintf(stderr, "Error: NULL pointer\n");
-    exit(EXIT_FAILURE);
-  }
-}
 
 char shift_letter(char character, int shift, bool encrypt)
 {
@@ -66,27 +58,6 @@ void vigenere_cipher(FILE *fp_input, FILE *fp_output, const char *key, bool encr
     cipher_letter = shift_letter(letter, shift, encrypt);
     fputc(cipher_letter, fp_output);
   }
-}
-
-FILE *get_file(const char *file_mode)
-{
-  char file_name[20];
-  scanf(" %s", file_name);
-  FILE *fp = fopen(file_name, file_mode);
-  check_ptr(fp);
-  return fp;
-}
-
-FILE *get_input_file(void)
-{
-  printf("Enter input file name: ");
-  return get_file("r");
-}
-
-FILE *get_output_file(void)
-{
-  printf("Enter ouput file name: ");
-  return get_file("w");
 }
 
 void ceasar(FILE *fp_input, FILE *fp_output, bool encrypt)
