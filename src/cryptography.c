@@ -10,6 +10,7 @@
 #define ALPHABET_LOWER_MAX (122)
 #define ALPHABET_UPPER_MIN (65)
 #define ALPHABET_UPPER_MAX (90)
+#define DECRYPT (false)
 
 static char shift_letter(char character, int shift, bool encrypt)
 {
@@ -65,6 +66,6 @@ void brute_force(FILE *fp_input, FILE *fp_output)
     sprintf(shift, "%d", i);
     fputs(shift, fp_output);
     fputs("\n\n", fp_output);
-    ceasar_cipher(fp_input, fp_output, i, false);
+    ceasar_cipher(fp_input, fp_output, i, DECRYPT);
   }
 }
