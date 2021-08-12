@@ -16,4 +16,4 @@ file.o: file.c file.h
 
 clean:
 		rm -f main 
-		rm *.o
+		rm -f *.o
