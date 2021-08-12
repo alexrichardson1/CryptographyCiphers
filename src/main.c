@@ -1,46 +1,41 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "file.h"
 #include "cryptography.h"
+#include "file.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define CEASAR_CHOCIE (1)
 #define VIGENERE_CHOCIE (2)
 #define BRUTE_FORCE_CHOICE (3)
 #define EXIT_CHOCIE (4)
 
-static bool get_encrypt(void)
-{
+static bool get_encrypt(void) {
   char encrypt_letter;
   printf("Encrypt or decrypt [e/d]: ");
   scanf(" %c", &encrypt_letter);
   return encrypt_letter == 'e';
 }
 
-static void ceasar_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
-{
+static void ceasar_menu(FILE *fp_input, FILE *fp_output, bool encrypt) {
   int shift;
   printf("Enter shift key: ");
   scanf(" %d", &shift);
   ceasar_cipher(fp_input, fp_output, shift, encrypt);
 }
 
-static void vigenere_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
-{
+static void vigenere_menu(FILE *fp_input, FILE *fp_output, bool encrypt) {
   char key[20];
   printf("Enter shift key: ");
   scanf(" %s", key);
   vigenere_cipher(fp_input, fp_output, key, encrypt);
 }
 
-static void menu(void)
-{
+static void menu(void) {
   int choice;
   FILE *fp_input;
   FILE *fp_output;
   bool encrypt;
-  do
-  {
+  do {
     printf("%d. Ceasar\n", CEASAR_CHOCIE);
     printf("%d. Vigenere\n", VIGENERE_CHOCIE);
     printf("%d. Brute force\n", BRUTE_FORCE_CHOICE);
@@ -50,13 +45,11 @@ static void menu(void)
 
     fp_input = get_input_file();
     fp_output = get_output_file();
-    if (choice == CEASAR_CHOCIE || choice == VIGENERE_CHOCIE)
-    {
+    if (choice == CEASAR_CHOCIE || choice == VIGENERE_CHOCIE) {
       encrypt = get_encrypt();
     }
 
-    switch (choice)
-    {
+    switch (choice) {
     case CEASAR_CHOCIE:
       ceasar_menu(fp_input, fp_output, encrypt);
       break;
@@ -76,8 +69,7 @@ static void menu(void)
   } while (choice != EXIT_CHOCIE);
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
   menu();
   return EXIT_SUCCESS;
 }

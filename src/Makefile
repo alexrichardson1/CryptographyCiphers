@@ -15,5 +15,5 @@ file.o: file.c file.h
 .PHONY: clean
 
 clean:
-		rm -f main 
+		rm -f main
 		rm -f *.o
