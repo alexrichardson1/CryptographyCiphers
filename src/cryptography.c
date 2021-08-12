@@ -11,7 +11,7 @@
 #define ALPHABET_UPPER_MIN (65)
 #define ALPHABET_UPPER_MAX (90)
 
-char shift_letter(char character, int shift, bool encrypt)
+static char shift_letter(char character, int shift, bool encrypt)
 {
   char encrypted_character = character;
   int ascii = character;
