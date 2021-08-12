@@ -72,12 +72,9 @@ void vigenere(FILE *fp_input, FILE *fp_output, bool encrypt)
   vigenere_cipher(fp_input, fp_output, key, encrypt);
 }
 
-void brute_force(void)
+void brute_force(FILE *fp_input, FILE *fp_output)
 {
-  FILE *fp_input = get_input_file();
-  FILE *fp_output = get_output_file();
   char shift[12];
-
   for (int i = 1; i < ALPHABET_SIZE; i++)
   {
     fputs("\n\nShift key: ", fp_output);
@@ -86,6 +83,4 @@ void brute_force(void)
     fputs("\n\n", fp_output);
     ceasar_cipher(fp_input, fp_output, i, false);
   }
-  fclose(fp_input);
-  fclose(fp_output);
 }
