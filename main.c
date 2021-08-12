@@ -48,10 +48,10 @@ void menu(void)
     printf("Enter a number: ");
     scanf("%d", &choice);
 
+    fp_input = get_input_file();
+    fp_output = get_output_file();
     if (choice == CEASAR_CHOCIE || choice == VIGENERE_CHOCIE)
     {
-      fp_input = get_input_file();
-      fp_output = get_output_file();
       encrypt = get_encrypt();
     }
 
@@ -64,7 +64,7 @@ void menu(void)
       vigenere_menu(fp_input, fp_output, encrypt);
       break;
     case BRUTE_FORCE_CHOICE:
-      brute_force();
+      brute_force(fp_input, fp_output);
       break;
     case EXIT_CHOCIE:
       break;
