@@ -17,35 +17,28 @@ bool get_encrypt(void)
   return encrypt_letter == 'e';
 }
 
-void ceasar_menu(void)
+void ceasar_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
 {
-  FILE *fp_input = get_input_file();
-  FILE *fp_output = get_output_file();
-  bool encrypt = get_encrypt();
   int shift;
   printf("Enter shift key: ");
   scanf(" %d", &shift);
   ceasar_cipher(fp_input, fp_output, shift, encrypt);
-  fclose(fp_input);
-  fclose(fp_output);
 }
 
-void vigenere_menu(void)
+void vigenere_menu(FILE *fp_input, FILE *fp_output, bool encrypt)
 {
-  FILE *fp_input = get_input_file();
-  FILE *fp_output = get_output_file();
-  bool encrypt = get_encrypt();
   char key[20];
   printf("Enter shift key: ");
   scanf(" %s", key);
   vigenere_cipher(fp_input, fp_output, key, encrypt);
-  fclose(fp_input);
-  fclose(fp_output);
 }
 
 void menu(void)
 {
   int choice;
+  FILE *fp_input;
+  FILE *fp_output;
+  bool encrypt;
   do
   {
     printf("%d. Ceasar\n", CEASAR_CHOCIE);
@@ -54,13 +47,21 @@ void menu(void)
     printf("%d. Exit\n", EXIT_CHOCIE);
     printf("Enter a number: ");
     scanf("%d", &choice);
+
+    if (choice == CEASAR_CHOCIE || choice == VIGENERE_CHOCIE)
+    {
+      fp_input = get_input_file();
+      fp_output = get_output_file();
+      encrypt = get_encrypt();
+    }
+
     switch (choice)
     {
     case CEASAR_CHOCIE:
-      ceasar_menu();
+      ceasar_menu(fp_input, fp_output, encrypt);
       break;
     case VIGENERE_CHOCIE:
-      vigenere_menu();
+      vigenere_menu(fp_input, fp_output, encrypt);
       break;
     case BRUTE_FORCE_CHOICE:
       brute_force();
@@ -70,6 +71,8 @@ void menu(void)
     default:
       printf("Invalid number. Enter again\n");
     }
+    fclose(fp_input);
+    fclose(fp_output);
   } while (choice != EXIT_CHOCIE);
 }
 
