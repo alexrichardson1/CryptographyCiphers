@@ -1,8 +1,12 @@
 CC=gcc
 CFLAGS=-g -Wall -Werror
 
-cryptography: cryptography.c file.o
-		$(CC) $(CFLAGS) cryptography.c file.o -o cryptography
+
+main: main.c cryptography.o file.o
+		$(CC) $(CFLAGS) main.c cryptography.o file.o -o main
+
+cryptography.o: cryptography.c file.o
+		$(CC) $(CFLAGS) -c cryptography.c
 
 file.o: file.c file.h
 		$(CC) $(CFLAGS) -c file.c
@@ -11,5 +15,5 @@ file.o: file.c file.h
 .PHONY: clean
 
 clean:
-		rm -f cryptography 
+		rm -f main 
 		rm *.o
